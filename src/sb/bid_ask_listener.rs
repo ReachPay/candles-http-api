@@ -23,7 +23,6 @@ impl SubscriberCallback<BidAskProtobufModel> for BidAskListener {
     ) -> Result<(), MySbSubscriberHandleError>{
         while let Some(message) = messages_reader.get_next_message() { 
             let mut message: CandlesBidAsk = message.get_messsage().into();
-            println!("Handled bid ask: {:?}", message);
             message.date = message.date / 1000000;
             self.app.cache.handle_new_bid_ask(vec![message]).await;
         }

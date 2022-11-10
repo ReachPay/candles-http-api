@@ -16,7 +16,7 @@ my-settings-reader = { tag = "0.1.5", git = "https://github.com/MyJetTools/my-se
     "background-reader",
 ] }
 flurl = { tag = "0.2.3", git = "https://github.com/MyJetTools/fl-url.git" }
-candles-cache = { tag = "0.1.1", git = "https://github.com/my-cfd-platform/candles-cache.git" }
+candles-cache = { tag = "0.1.0", git = "https://github.com/my-cfd-platform/candles-cache.git" }
 
 my-telemetry = { tag = "0.2.2", git = "https://github.com/MyJetTools/my-telemetry.git" }
 my-telemetry-writer = { tag = "0.1.2", git = "https://github.com/MyJetTools/my-telemetry-writer.git" }

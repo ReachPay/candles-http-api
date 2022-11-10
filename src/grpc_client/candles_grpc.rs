@@ -45,13 +45,12 @@ impl OrdersFlowsGrpcClient {
         let mut inner = result.into_inner();
 
         while let Some(candle) = inner.message().await.unwrap() {
-            println!("is bid: {} {:?}", is_bid, candle.clone());
             
             let candle_model = candle.candle.unwrap();
             
             cache.init(candle.instrument_id, is_bid, 
                 cast_candle_type(candle.candle_type as u8), 
-                CandleModel { open: candle_model.open, close: candle_model.close, high: candle_model.high, low: candle_model.low, datetime: candle_model.date_time}).await;
+                CandleModel { open: candle_model.open, close: candle_model.close, high: candle_model.high, low: candle_model.low, datetime: candle_model.date_time / 1000}).await;
         }
 
         return cache;

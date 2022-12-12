@@ -79,13 +79,13 @@ async fn handle_request(
     let candle_type = map_api_contract_to_internal_candle_type(http_input.candle_type);
     let is_bid = map_api_bid_or_ask_to_is_bid(http_input.bid_or_ask);
 
-    let start_date = http_input.from / 1000;
-    let end_date = http_input.to / 1000;
+    let start_date = format_date(http_input.from);
+    let end_date = format_date(http_input.to);
 
     let candles = action.app.cache.get_by_date_range(http_input.instrument_id, candle_type, is_bid, start_date, end_date).await;
 
     let result = candles.iter().map(|x| CandleApiModel{
-        d: x.datetime,
+        d: x.datetime * 1000,
         o: x.open,
         c: x.close,
         h: x.high,
@@ -97,6 +97,14 @@ async fn handle_request(
     };
 
     return HttpOutput::as_json(response).into_ok_result(true).into();
+}
+
+fn format_date(src: u64) -> u64{
+    if 10 == src.to_string().len() {
+        return src;
+    }
+
+    return src / 1000;
 }
 
 fn map_api_contract_to_internal_candle_type(src: u8) -> CandleType {
